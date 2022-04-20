@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">COVID19-TrackerSystem</string>
+    <string name="signed_in_fmt">Signed in as: %s</string>
+    <string name="loading">Loading…</string>
+    <string name="signed_out">Signed out</string>
+    <string name="desc_google_icon">Google Logo</string>
+    <string name="title_text">Google Sign-In\nQuickstart</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="sign_out">Sign Out</string>
 </resources>
