@@ -7,4 +7,5 @@
     <string name="title_text">Google Sign-In\nQuickstart</string>
     <string name="disconnect">Disconnect</string>
     <string name="sign_out">Sign Out</string>
+    <string name="default_web_client_id">969207372727-8mfufaoukgdvu5eo0ko52e2bua3krqs3.apps.googleusercontent.com</string>
 </resources>

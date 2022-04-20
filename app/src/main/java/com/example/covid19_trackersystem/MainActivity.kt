@@ -3,15 +3,22 @@ package com.example.covid19_trackersystem
 import android.app.VoiceInteractor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ListAdapter
-import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONException
+
+import android.content.Intent
+import android.os.Bundle
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_dashboard.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var worldCasesTV:TextView
@@ -23,9 +30,34 @@ class MainActivity : AppCompatActivity() {
     lateinit var stateRV:RecyclerView
     lateinit var stateRVAdapter: StateRVAdapter
     lateinit var stateList: List<StateModal>
+    // declare the GoogleSignInClient
+    lateinit var mGoogleSignInClient: GoogleSignInClient
+
+    private val auth by lazy {
+        FirebaseAuth.getInstance()
+    }
+
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // call requestIdToken as follows
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+        val logout=findViewById(R.id.logout)
+        logout.setOnClickListener {
+            mGoogleSignInClient.signOut().addOnCompleteListener {
+                val intent = Intent(this, MainActivity::class.java)
+                Toast.makeText(this, "Logging Out", Toast.LENGTH_SHORT).show()
+                startActivity(intent)
+                finish()
+            }
         worldCasesTV = findViewById(R.id.idTVWorldCases)
         worldRecoveredTV = findViewById(R.id.idTVWorldRecovered)
         worldDeathsTV = findViewById(R.id.idTVWorldDeaths)
@@ -37,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         stateList = ArrayList<StateModal>()
         getStateInfo()
         getWorldInfo()
+
 
     }
     private fun getStateInfo(){
