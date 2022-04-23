@@ -80,11 +80,11 @@ class MainActivity : AppCompatActivity() {
         queue.add(request)
 
     }
-    private fun getWorldInfo(){
-        val url = "https://corona.lmao.ninja/v2/countries"
+    private fun getWorldInfo() {
+        val url = "https://corona.lmao.ninja/v3/covid-19/all"
         val queue = Volley.newRequestQueue(this@MainActivity)
         val request =
-            JsonObjectRequest(Request.Method.GET,url,null,{ response->
+            JsonObjectRequest(Request.Method.GET,url,null,{ response ->
                 try {
                     val worldCases: Int = response.getInt("cases")
                     val worldRecovered: Int = response.getInt("recovered")
@@ -94,13 +94,14 @@ class MainActivity : AppCompatActivity() {
                     worldDeathsTV.text = worldDeaths.toString()
 
 
-                }catch (e:JSONException){
+                }
+                catch (e:JSONException){
                     e.printStackTrace()
                 }
 
-            }, { error->{
+            }, { error->
                 Toast.makeText(this,"Fail to get data",Toast.LENGTH_SHORT).show()
-            }})
+            })
         queue.add(request)
 
     }
