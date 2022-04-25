@@ -1,1 +1,1 @@
-Covid-19-information-tracker-system
+COVID-19-Information-Tracker-System-Application
